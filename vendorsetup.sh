@@ -24,4 +24,8 @@ git clone https://github.com/Neon-Duchamp/keys.git -b yaap-keys vendor/yaap/sign
 cd vendor/yaap
 git fetch https://github.com/sm8735-dev/vendor_yaap sixteen
 git cherry-pick 2a41fb363dc64d419875a3757b59b8b68d776128
+
+cd hardware/qcom-caf/sm8750/audio/pal
+git fetch https://github.com/sm8735-dev/vendor_qcom_opensource_arpal-lx lineage-24.0-caf-sm8750
+git reset --hard FETCH_HEAD
 croot
