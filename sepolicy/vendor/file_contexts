@@ -89,6 +89,9 @@
 /dev/lirc0 u:object_r:lirc_device:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.ir-service\.onyx u:object_r:hal_ir_default_exec:s0
 
+# LED
+/vendor/bin/hw/android\.hardware\.light-service\.onyx u:object_r:hal_light_default_exec:s0
+
 # Metis/Migt
 /dev/metis u:object_r:migt_dev:s0
 /dev/migt u:object_r:migt_dev:s0
