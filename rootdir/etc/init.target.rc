@@ -217,3 +217,9 @@ on property:persist.vendor.high_touch_rate=1 && property:vendor.post_boot.parsed
 
 on property:persist.vendor.high_touch_rate=0 && property:vendor.post_boot.parsed=1
     write /proc/xm_htc_report_rate 0
+
+# Allow system to manipulate KProfiles modes and parameters
+    chown system system /sys/module/kprofiles/parameters/auto_kprofiles
+    chmod 0660 /sys/module/kprofiles/parameters/auto_kp
+    chown system system /sys/kernel/kprofiles/kp_mode
+    chmod 0660 /sys/kernel/kprofiles/kp_mode
