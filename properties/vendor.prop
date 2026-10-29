@@ -166,6 +166,8 @@ ro.hardware.keystore_desede=true
 debug.c2.use_dmabufheaps=1
 debug.stagefright.c2inputsurface=-1
 media.c2.hal.selection=aidl
+ro.media.xml_variant.codecs=_tuna_v0
+ro.media.xml_variant.codecs_performance=_tuna_v0
 ro.mediaserver.64b.enable=true
 vendor.media.omx=0
 
