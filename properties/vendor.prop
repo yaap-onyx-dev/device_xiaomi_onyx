@@ -170,6 +170,7 @@ ro.media.xml_variant.codecs=_tuna_v0
 ro.media.xml_variant.codecs_performance=_tuna_v0
 ro.mediaserver.64b.enable=true
 vendor.media.omx=0
+vendor.media.target_variant=_tuna_v0
 
 # Media (steps)
 ro.config.alarm_vol_steps=15
