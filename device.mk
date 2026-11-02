@@ -175,6 +175,12 @@ PRODUCT_VENDOR_PROPERTIES += \
     dalvik.vm.usap_pool_enabled?=true \
     dalvik.vm.usap_pool_size_max?=5
 
+# Compile system_server with the speed filter, both at build time and
+# whenever it gets recompiled on the device.
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed
+PRODUCT_PRODUCT_PROPERTIES += \
+    dalvik.vm.systemservercompilerfilter=speed
+
 # Enable whole-program R8 Java optimizations for SystemUI and system_server,
 # but also allow explicit overriding for testing and development.
 SYSTEM_OPTIMIZE_JAVA := true
