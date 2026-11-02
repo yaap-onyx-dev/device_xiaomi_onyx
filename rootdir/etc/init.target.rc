@@ -212,6 +212,41 @@ on property:debug.high_touch_rate=0
     setprop persist.vendor.high_touch_rate 0
     write /proc/xm_htc_report_rate 0
 
+on property:vendor.post_boot.parsed=1
+    # cpusets: background work on the efficiency cluster, foreground apps
+    # off the titanium and prime cores, the display pipeline off the prime
+    # core and the whole SoC for the top-app.
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/system-background/cpus 0-1
+    write /dev/cpuset/foreground/cpus 0-4
+    write /dev/cpuset/display/cpus 0-6
+    write /dev/cpuset/top-app/cpus 0-7
+
+    # uclamp: a 15% floor for the top-app. Besides the frequency floor, CASS
+    # uses it to steer the top-app towards the performance clusters, whose
+    # minimum OPP already delivers it. Cap system-background at 40%, which
+    # CASS turns into a preference for the smaller CPUs.
+    write /dev/cpuctl/top-app/cpu.uclamp.max max
+    write /dev/cpuctl/top-app/cpu.uclamp.min 15
+    write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 0
+    write /dev/cpuctl/foreground/cpu.uclamp.max max
+    write /dev/cpuctl/foreground/cpu.uclamp.min 0
+    write /dev/cpuctl/foreground/cpu.uclamp.latency_sensitive 0
+    write /dev/cpuctl/background/cpu.uclamp.max max
+    write /dev/cpuctl/background/cpu.uclamp.min 0
+    write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 0
+    write /dev/cpuctl/system-background/cpu.uclamp.max 40
+    write /dev/cpuctl/system-background/cpu.uclamp.min 0
+    write /dev/cpuctl/system-background/cpu.uclamp.latency_sensitive 0
+    write /dev/cpuctl/camera-daemon/cpu.uclamp.max max
+    write /dev/cpuctl/camera-daemon/cpu.uclamp.min 2
+    write /dev/cpuctl/nnapi-hal/cpu.uclamp.max max
+    write /dev/cpuctl/nnapi-hal/cpu.uclamp.min 2
+
+    # Favor the top-app and foreground groups when the CPUs are contended
+    write /dev/cpuctl/top-app/cpu.shares 5120
+    write /dev/cpuctl/foreground/cpu.shares 4096
+
 on property:persist.vendor.high_touch_rate=1 && property:vendor.post_boot.parsed=1
     write /proc/xm_htc_report_rate 1
 
