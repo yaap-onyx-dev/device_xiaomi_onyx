@@ -162,11 +162,30 @@ if [ -d /proc/sys/walt ]; then
 	echo 1228800 80 1670400 80 2169600 80 2515200 80 2956800 80 3206400 85 > /sys/devices/system/cpu/cpufreq/policy7/walt/zone_max_util_pct
 
 else
-	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
-	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy2/scaling_governor
-	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy5/scaling_governor
-	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy7/scaling_governor
-	echo 1 > /proc/sys/kernel/sched_pelt_multiplier
+	# No WALT: CASS places the tasks, FIE measures the real CPU frequency
+	# and schedutil picks the frequency of every cluster.
+	for policy in /sys/devices/system/cpu/cpufreq/policy[0-9]*
+	do
+		echo "schedutil" > $policy/scaling_governor
+		# Frequency increases aren't rate limited with FIE, only the
+		# decreases are.
+		echo 2000 > $policy/schedutil/rate_limit_us
+	done
+
+	# Tapered DVFS headroom: the percentage of the capacity left above the
+	# utilization that is added on top of it. Efficiency cluster (A720),
+	# the two performance clusters (A720) and the prime core (X4).
+	echo 25 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/dvfs_headroom_pct
+	echo 20 > /sys/devices/system/cpu/cpufreq/policy2/schedutil/dvfs_headroom_pct
+	echo 20 > /sys/devices/system/cpu/cpufreq/policy5/schedutil/dvfs_headroom_pct
+	echo 10 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/dvfs_headroom_pct
+
+	# PELT: the utilization ramps up with a 16 ms half-life and decays
+	# with an 8 ms one once a task stops running (32/16 ms scaled by 2).
+	echo 2 > /proc/sys/kernel/sched_pelt_multiplier
+
+	# Don't pay for scheduler statistics nobody reads.
+	echo 0 > /proc/sys/kernel/sched_schedstats
 fi
 
 	echo 441600 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
@@ -180,10 +199,6 @@ fi
 # threads (SurfaceFlinger, HWC, audio, input) never start at the bottom
 # of the frequency table.
 echo 128 > /proc/sys/kernel/sched_util_clamp_min_rt_default
-
-# cpuset parameters
-echo 0-1 5-6 > /dev/cpuset/background/cpus
-echo 0-1 5-6 > /dev/cpuset/system-background/cpus
 
 # configure bus-dcvs
 bus_dcvs="/sys/devices/system/cpu/bus_dcvs"
