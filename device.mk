@@ -173,7 +173,13 @@ PRODUCT_VENDOR_PROPERTIES += \
     dalvik.vm.madvise.vdexfile.size?=209715200 \
     dalvik.vm.madvise.odexfile.size?=209715200 \
     dalvik.vm.usap_pool_enabled?=true \
-    dalvik.vm.usap_pool_size_max?=5
+    dalvik.vm.usap_pool_size_min?=1 \
+    dalvik.vm.usap_pool_size_max?=5 \
+    dalvik.vm.usap_refill_threshold?=1 \
+    dalvik.vm.usap_pool_refill_delay_ms?=3000 \
+    dalvik.vm.jitthreshold?=5000 \
+    dalvik.vm.jitwarmupthreshold?=2500 \
+    dalvik.vm.jitpthreadpriority?=8
 
 # Compile system_server with the speed filter, both at build time and
 # whenever it gets recompiled on the device.
