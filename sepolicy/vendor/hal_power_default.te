@@ -1,3 +1,12 @@
 allow hal_power_default proc_walt:dir search;
 allow hal_power_default proc_walt:file rw_file_perms;
 allow hal_power_default vendor_sysfs_msm_perf:file rw_file_perms;
+
+# cpu_dma_latency votes
+allow hal_power_default vendor_latency_device:chr_file rw_file_perms;
+
+# GPU minimum frequency, through /sys/class/kgsl/kgsl-3d0/devfreq
+allow hal_power_default vendor_sysfs_kgsl:dir search;
+allow hal_power_default vendor_sysfs_kgsl:lnk_file read;
+allow hal_power_default vendor_sysfs_devfreq:dir search;
+allow hal_power_default vendor_sysfs_devfreq:file rw_file_perms;

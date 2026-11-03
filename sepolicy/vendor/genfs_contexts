@@ -112,3 +112,9 @@ genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display-primary/wakeup u:objec
 
 # Walt
 genfscon proc /sys/walt u:object_r:proc_walt:s0
+
+# GPU devfreq (reached through /sys/class/kgsl/kgsl-3d0/devfreq)
+genfscon sysfs /devices/platform/soc/3d00000.qcom,kgsl-3d0/devfreq u:object_r:vendor_sysfs_devfreq:s0
+
+# Scheduler
+genfscon proc /sys/kernel/sched_pelt_multiplier u:object_r:proc_sched:s0
