@@ -1,0 +1,2 @@
+# NT synchronization primitives
+/dev/ntsync    u:object_r:ntsync_device:s0

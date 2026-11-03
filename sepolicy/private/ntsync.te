@@ -1,0 +1,4 @@
+# NT synchronization primitives (/dev/ntsync), used by Wine-based apps
+type ntsync_device, dev_type;
+
+allow untrusted_app_all ntsync_device:chr_file rw_file_perms;
