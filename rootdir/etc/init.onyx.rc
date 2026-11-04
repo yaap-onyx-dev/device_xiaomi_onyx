@@ -261,6 +261,15 @@ service vendor.nv_mac /vendor/bin/nv_mac
     group system inet net_admin wifi net_raw
     oneshot
 
+service vendor.fingerprint-default /vendor/bin/hw/android.hardware.biometrics.fingerprint-service.xiaomi
+    override
+    class late_start
+    user system
+    group system input uhid
+    capabilities SYS_NICE
+    shutdown critical
+    task_profiles MaxPerformance
+
 service vendor.sensors-hal-multihal /vendor/bin/hw/android.hardware.sensors-service.xiaomi-multihal
     override
     class hal
