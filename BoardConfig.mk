@@ -164,7 +164,8 @@ TARGET_KERNEL_EXT_MODULES := \
     qcom/opensource/wlan/platform \
     qcom/opensource/wlan/qcacld-3.0 \
     qcom/opensource/bt-kernel \
-    nxp/opensource/driver
+    nxp/opensource/driver \
+    kernelsu:kbuild
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
