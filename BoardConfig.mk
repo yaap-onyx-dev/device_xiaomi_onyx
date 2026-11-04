@@ -130,6 +130,9 @@ BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(first_stage_modules) $(se
 BOOT_KERNEL_MODULES := $(first_stage_modules) $(second_stage_modules)
 SYSTEM_KERNEL_MODULES := $(gki_modules) $(kunit_modules)
 
+# Built for LKM root installs, not shipped
+TARGET_KERNEL_MODULES_IGNORE := kernelsu
+
 TARGET_KERNEL_EXT_MODULE_ROOT := kernel/xiaomi/sm8735-modules
 TARGET_KERNEL_EXT_MODULES := \
     qcom/opensource/mmrm-driver \
